@@ -1,8 +1,14 @@
 #include <iostream>
+#include <vector>
 #include "raylib.h"
 #include "player.hpp"
 
 int main() {
+    std::srand(time(0));
+    std::vector<Rectangle> rd(30);
+    for (int i(0); i< rd.size(); i++) {
+        rd[i] = (Rectangle){int(std::rand() % 500), int(std::rand() % 500), 50, 50};
+    }
     InitWindow(600, 600, "First release of Calypso");
     Camera2D camera;
     camera = {0};
@@ -14,7 +20,6 @@ int main() {
     Rectangle rec2{500, 500, 50, 50};
     Texture2D grass(LoadTexture("./grass.png"));    
     while (!WindowShouldClose()) {
-        player.move();
         camera = player.rCamera();
         BeginDrawing();
             ClearBackground(BLACK);
@@ -24,12 +29,17 @@ int main() {
                         DrawTexture(grass, i, p, WHITE);
                     }
                 }
+                for (int i(0); i< rd.size(); i++) {
+                    DrawRectangleRec(rd[i], WHITE);
+                    player.detectCollision(rd[i]);
+                }
                 DrawRectangleRec(rec2, WHITE);
                 player.render();
                 player.detectCollision(rec2);
             EndMode2D();
             player.statRender();
         EndDrawing();
+        player.move();
     }
     CloseWindow();
 

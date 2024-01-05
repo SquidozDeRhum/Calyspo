@@ -9,16 +9,17 @@ class Player {
         void statRender();
         void detectCollision(Rectangle entity);
         Camera2D rCamera();
+        Rectangle rCollision();
     private:
         Texture2D perso;
         float m_x, m_y;
-        int vspeed, hspeed;
+        Vector2 velocity;
         bool up, down, right, left, debug;
         Camera2D camera;
         Rectangle collision;
 };
 
-Player::Player(Camera2D & cam) : m_x(0), m_y(0), vspeed(200), hspeed(200), camera(cam), debug(false){
+Player::Player(Camera2D & cam) : m_x(0), m_y(0), velocity{200, 200}, camera(cam), debug(false){
     perso = LoadTexture("./character.png");
     camera.target = (Vector2){m_x, m_y};
     collision = (Rectangle){m_x, m_y, 32, 32};
@@ -61,10 +62,10 @@ void Player::keyhandling() {
 
 void Player::move() {
     keyhandling();
-    if (up) m_y += int(-vspeed * GetFrameTime());
-    if (down) m_y += int(vspeed * GetFrameTime());
-    if (right) m_x += int(hspeed * GetFrameTime());
-    if (left) m_x += int(-hspeed * GetFrameTime());
+    if (up) m_y -= int(velocity.y * GetFrameTime());
+    if (down) m_y += int(velocity.y * GetFrameTime());
+    if (right) m_x += int(velocity.x * GetFrameTime());
+    if (left) m_x -= int(velocity.x * GetFrameTime());
     camera.target = (Vector2){m_x, m_y};
     collision.x = m_x;
     collision.y = m_y;
@@ -83,7 +84,8 @@ void Player::statRender() {
         DrawText(TextFormat("Y : %i", int(m_y)), 0, 25, 20, WHITE);
         DrawFPS(0, 40);
         DrawText(TextFormat("DT : %i", GetFrameTime()), 0, 60, 20, WHITE);
-        DrawText(TextFormat("Dowm : %i", down), 0, 85, 20, WHITE);
+        DrawText(TextFormat("Down : %i", down), 0, 85, 20, WHITE);
+        DrawText(TextFormat("Collision y : %i", int(collision.y)), 0, 100, 20, WHITE);
     }
 }
 
@@ -92,25 +94,26 @@ Camera2D Player::rCamera() {
 }
 
 void Player::detectCollision(Rectangle entity) {
-    if (down && CheckCollisionRecs(collision, entity) && collision.y < entity.y){
-        vspeed = 0;
-    }
-    else if (up && CheckCollisionRecs(collision, entity) && collision.y > entity.y){
-        vspeed = 0;
-    }
-    else {
-        vspeed = 200;
-    }
-    if (right && CheckCollisionRecs(collision, entity) && collision.x < entity.x){
-        hspeed = 0;
-    }
-    else if (left && CheckCollisionRecs(collision, entity) && collision.x > entity.x){
-        hspeed = 0;
-    }
-    else {
-        hspeed = 200;
+    if (CheckCollisionRecs(collision, entity)) {
+        // Sur le dessus
+        if (collision.y >= (entity.y - entity.height) && (collision.y < entity.y)){
+            m_y = entity.y - collision.height;
+        }
+        // En bas
+        if (collision.y <= (entity.y + entity.height) && (collision.y > entity.y + 30)) {
+            m_y = entity.y + entity.height;
+        }
+        // Sur la droite
+        if (collision.x > (entity.x - entity.width) && (collision.x < entity.x)){
+            m_x = entity.x - collision.width;
+        }
+        // Sur la gauche
+        if (collision.x < (entity.x + entity.width) && (collision.x > entity.x + 30)) {
+            m_x = entity.x + entity.width;
+        }
     }
     if (debug) {
-        DrawRectangleRec(GetCollisionRec(collision, entity), (Color){0, 0, 40, 120});
+        DrawRectangleRec(GetCollisionRec(collision, entity), (Color){0, 0, 40, 110});
+        DrawRectangle(collision.x, collision.y, 10, 10, BLUE);
     }
 }
