@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "raylib.h"
+#include "./include/raylib.h"
 #include "player.hpp"
 
 int main() {
@@ -18,7 +18,8 @@ int main() {
     Player player(camera);
     SetTargetFPS(60);
     Rectangle rec2{500, 500, 50, 50};
-    Texture2D grass(LoadTexture("./grass.png"));    
+    Texture2D grass(LoadTexture(".\\grass.png"));    
+    std::cout << GetWorkingDirectory() << std::endl;
     while (!WindowShouldClose()) {
         camera = player.rCamera();
         BeginDrawing();

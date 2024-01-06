@@ -1,2 +1,5 @@
 .vscode
 main
+main.o
+player.o
+main.exe
