@@ -3,3 +3,4 @@ main
 main.o
 player.o
 main.exe
+entity.o
