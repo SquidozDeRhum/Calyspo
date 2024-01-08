@@ -6,7 +6,7 @@ Entity::Entity(){
 
 }
 
-Entity::Entity(float x, float y, int height, int width) : one{x, y}, four{x + width, y + height}, collision{x, y, width, height} {
+Entity::Entity(float x, float y, int height, int width) : one{x, y}, four{x + width -1, y + height - 1}, collision{x, y, width, height} {
 
 }
 

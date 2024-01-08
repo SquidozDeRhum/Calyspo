@@ -3,6 +3,7 @@
 
 #include "./raylib.h"
 #include "./entity.hpp"
+#include "vector"
 
 class Player {
     public:
@@ -16,7 +17,6 @@ class Player {
         Rectangle rCollision();
     private:
         Texture2D perso;
-        float m_x, m_y;
         Vector2 velocity, one, four, center;
         bool up, down, right, left, debug, check;
         Camera2D camera;

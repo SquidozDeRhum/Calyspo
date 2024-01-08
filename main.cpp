@@ -7,7 +7,7 @@
 
 int main() {
     std::srand(std::time(0));
-    std::vector<Entity> entities(30);
+    std::vector<Entity> entities(10);
     for (int i(0); i < entities.size(); i++) {
         entities[i] = Entity(int(std::rand() % 1024 - 512), int(std::rand() % 1024 - 512), 50, 50);
     }
@@ -20,12 +20,13 @@ int main() {
     Player player(camera);
     SetTargetFPS(60);
     Entity entity(500, 500, 50, 50);
+    Entity entity2(500, 550, 50, 50);
     Texture2D grass(LoadTexture("./assets/grass.png"));
     while (!WindowShouldClose()) {
         camera = player.rCamera();
+        player.move();
         BeginDrawing();
             ClearBackground(BLACK);
-            player.move();
             BeginMode2D(camera);
                 for (int i(-1024); i < 1024; i += 32) {
                     for (int p(-1024); p < 1024; p += 32) {
@@ -37,7 +38,9 @@ int main() {
                     player.detectCollision(entities[i]);
                 }
                 entity.render();
+                entity2.render();
                 player.detectCollision(entity);
+                player.detectCollision(entity2);
                 player.render();
             EndMode2D();
             player.statRender();
