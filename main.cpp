@@ -1,51 +1,120 @@
 #include <iostream>
-#include <vector>
-#include <ctime>
+#include "./include/box2d/box2d.h"
 #include "./include/raylib.h"
-#include "./include/player.hpp"
-#include "./include/entity.hpp"
 
 int main() {
-    std::srand(std::time(0));
-    std::vector<Entity> entities(10);
-    for (int i(0); i < entities.size(); i++) {
-        entities[i] = Entity(int(std::rand() % 1024 - 512), int(std::rand() % 1024 - 512), 50, 50);
-    }
-    InitWindow(600, 600, "First release of Calypso");
-    Camera2D camera;
-    camera = {0};
-    camera.offset = (Vector2){300, 300};
-    camera.rotation = 0.0f;
-    camera.zoom = 2.0f;
-    Player player(camera);
-    SetTargetFPS(60);
-    Entity entity(500, 500, 50, 50);
-    Entity entity2(500, 550, 50, 50);
-    Texture2D grass(LoadTexture("./assets/grass.png"));
-    while (!WindowShouldClose()) {
-        camera = player.rCamera();
-        player.move();
+    const int screenWidth(400);
+    const int screenHeight(400);
+
+    const int frameRate(60);
+
+    const float RATIO(32.0f);
+
+    bool debug = false;
+
+    SetTargetFPS(frameRate);
+
+    b2Vec2 gravity(0.0f, 9.8f);
+    b2World world(gravity);
+
+    // Red Box
+
+    Vector2 pos{0.0f, 20.0f};
+    Rectangle collision{pos.x - 1, pos.y - 1, 21.0f, 21.0f};
+
+    b2BodyDef bd;
+    b2Body *body;
+    b2PolygonShape shape;
+    b2FixtureDef fd;
+    b2Vec2 velocity;
+
+    bd.position.Set(pos.x / RATIO + 10 / RATIO, pos.y / RATIO + 10 / RATIO);
+    bd.type = b2_dynamicBody;
+    bd.awake = true;
+    bd.fixedRotation = true;
+
+    shape.SetAsBox(10.0f / RATIO, 10.0f / RATIO);
+
+    fd.shape = &shape;
+    fd.friction = 1.0f;
+    fd.density = 1.0f;
+
+    body = world.CreateBody(&bd);
+
+    body->CreateFixture(&fd);
+
+    body->SetFixedRotation(true);
+
+    // Ground
+
+    b2Body *ground;
+
+    Vector2 gpos{0.0f, 380.0f};
+    Rectangle gcollision{gpos.x - 1, gpos.y - 1, 401.0f, 21.0f};
+
+    bd.position.Set(gpos.x / RATIO + 200 / RATIO, gpos.y / RATIO + 10 / RATIO);
+    bd.type = b2_staticBody;
+    bd.awake = true;
+    bd.fixedRotation = true;
+
+    shape.SetAsBox(200.0f / RATIO, 10.0f / RATIO);
+
+    fd.shape = &shape;
+
+    ground = world.CreateBody(&bd);
+
+    ground->CreateFixture(&fd);
+
+    InitWindow(screenWidth, screenHeight, "Basic window");
+    while(!WindowShouldClose()) {
         BeginDrawing();
-            ClearBackground(BLACK);
-            BeginMode2D(camera);
-                for (int i(-1024); i < 1024; i += 32) {
-                    for (int p(-1024); p < 1024; p += 32) {
-                        DrawTexture(grass, i, p, WHITE);
-                    }
-                }
-                for (int i(0); i < entities.size(); i++) {
-                    entities[i].render();
-                    player.detectCollision(entities[i]);
-                }
-                entity.render();
-                entity2.render();
-                player.detectCollision(entity);
-                player.detectCollision(entity2);
-                player.render();
-            EndMode2D();
-            player.statRender();
+            ClearBackground(Color{127, 127, 127, 0});
+            DrawRectangleV(pos, Vector2{20, 20}, RED);
+            DrawRectangleV(gpos, Vector2{400, 20}, RED);
+
+            if (debug) {
+                std::cout << collision.y << std::endl;
+                std::cout << pos.y << std::endl;
+                DrawRectangleRec(GetCollisionRec(collision, gcollision), Color{0, 0, 40, 110});
+                DrawRectangleLinesEx(collision, 1.0f, Color{255, 255, 255, 255});
+            }
+
         EndDrawing();
+        world.Step(1.0f/frameRate, 6, 2);
+        pos.y = body->GetPosition().y * RATIO -9.25f;
+        pos.x = body->GetPosition().x * RATIO - 10.0f;
+        collision.x = pos.x;
+        collision.y = pos.y;
+        if (IsKeyDown(KEY_A)) {
+            velocity = body->GetLinearVelocity();
+            velocity.x = -8.0f;
+            body->SetLinearVelocity(velocity);
+        }
+        if (IsKeyDown(KEY_D)) {
+            velocity = body->GetLinearVelocity();
+            velocity.x = 8.0f;
+            body->SetLinearVelocity(velocity);
+        }
+        if (IsKeyPressed(KEY_SPACE) && CheckCollisionRecs(collision, gcollision)) {
+            velocity = b2Vec2(0.0f, -30.0f);
+            body->ApplyForceToCenter(velocity, true);
+        }
+        if (IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && CheckCollisionRecs(collision, gcollision)) {
+            velocity = body->GetLinearVelocity();
+            velocity.x = 0.0f;
+            body->SetLinearVelocity(velocity);
+        }   
+        if (IsKeyPressed(KEY_Y)) {
+            if (debug) {
+                debug = false;
+            }
+            else {
+                debug = true;
+            }
+        }
     }
+
     CloseWindow();
+
     return 0;
 }
