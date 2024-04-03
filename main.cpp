@@ -1,6 +1,7 @@
 #include <iostream>
-#include "./include/box2d/box2d.h"
-#include "./include/raylib.h"
+#include "raylib.h"
+#include "box2d/box2d.h"
+
 
 int main() {
     const int screenWidth(400);
