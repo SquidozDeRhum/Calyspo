@@ -1,5 +1,5 @@
 #include <iostream>
-#include "entity.hpp"
+#include "../include/entity.hpp"
 #include "raylib.h"
 #include "box2d/box2d.h"
 

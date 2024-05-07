@@ -1,7 +1,7 @@
 #include "box2d/box2d.h"
 #include "raylib.h"
-#include "entity.hpp"
-#include "player.hpp"
+#include "../include/entity.hpp"
+#include "../include/player.hpp"
 
 const int RATIO(32.0f);
 

@@ -2,8 +2,8 @@
 #include "raylib.h"
 #include "box2d/box2d.h"
 
-#include "entity.hpp"
-#include "player.hpp"
+#include "include/entity.hpp"
+#include "include/player.hpp"
 
 const int screenWidth(400);
 
@@ -23,7 +23,7 @@ int main() {
     b2World world(gravity);
 
     Player feur(world, 200, 200, 20, 20, false);
-    Entity ground(world, 200, 390, 400, 20);
+    Entity ground(world, 200, 390, 200, 20);
 
     InitWindow(screenWidth, screenHeight, "Basic window");
     while(!WindowShouldClose()) {

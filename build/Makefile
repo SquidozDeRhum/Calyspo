@@ -5,11 +5,11 @@ output: main.o entity.o player.o
 main.o: ../main.cpp
 	g++ -c ../main.cpp
 
-entity.o: ../entity.cpp
-	g++ -c ../entity.cpp
+entity.o: ../lib/entity.cpp
+	g++ -c ../lib/entity.cpp
 
-player.o: ../player.cpp
-	g++ -c ../player.cpp
+player.o: ../lib/player.cpp
+	g++ -c ../lib/player.cpp
 
 clean:
 	rm ./*.o ./main
