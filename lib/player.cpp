@@ -3,8 +3,6 @@
 #include "../include/entity.hpp"
 #include "../include/player.hpp"
 
-const int RATIO(32.0f);
-
 void Player::inputHandling() {
     if (IsKeyDown(KEY_A)) {
         velocity = body->GetLinearVelocity();

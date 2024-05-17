@@ -1,45 +1,35 @@
-#include <iostream>
 #include "raylib.h"
 #include "box2d/box2d.h"
 
 #include "include/entity.hpp"
 #include "include/player.hpp"
 
-const int screenWidth(400);
+const int width(400);
+const int height(400);
 
-const int screenHeight(400);
-
-const int frameRate(60);
-
-const float RATIO(32.0f);
+const int framerate(60);
 
 int main() {
 
-    bool debug = false;
-
-    SetTargetFPS(frameRate);
+    SetTargetFPS(framerate);
 
     b2Vec2 gravity(0.0f, 9.8f);
     b2World world(gravity);
 
-    Player feur(world, 200, 200, 20, 20, false);
+    Player player(world, 200, 200, 20, 20, false);
     Entity ground(world, 200, 390, 200, 20);
 
-    InitWindow(screenWidth, screenHeight, "Basic window");
+    InitWindow(width, height, "Basic window");
     while(!WindowShouldClose()) {
         BeginDrawing();
             ClearBackground(Color{127, 127, 127, 0});
-            feur.render();
-            feur.inputHandling();
+            player.render();
+            player.inputHandling();
             ground.render();
-            if (debug) {
-
-            }
         EndDrawing();
-        world.Step(1.0f/frameRate, 6, 2);
+        world.Step(1.0f/framerate, 6, 2);
     }
 
     CloseWindow();
-
     return 0;
 }
