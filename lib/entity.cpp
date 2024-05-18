@@ -1,18 +1,15 @@
 #include <iostream>
-#include "../include/entity.hpp"
 #include "raylib.h"
 #include "box2d/box2d.h"
+
+#include "../include/entity.hpp"
 
 const int RATIO(16.0f);
 
 Entity::Entity(b2World & world, float x, float y, float width, float height, Texture2D &texture, bool staticbody): m_width(width), m_height(height), m_texture(texture) {
     bd.position.Set(x / RATIO, y / RATIO);
-    if (staticbody) {
-        bd.type = b2_staticBody;
-    }
-    else {
-        bd.type = b2_dynamicBody;
-    }
+    if (staticbody) bd.type = b2_staticBody;
+    else bd.type = b2_dynamicBody;
     bd.awake = true;
     bd.fixedRotation = true;
 
@@ -25,7 +22,6 @@ Entity::Entity(b2World & world, float x, float y, float width, float height, Tex
     body = world.CreateBody(&bd);
 
     body->CreateFixture(&fd);
-
     body->SetFixedRotation(true);
 }
 
