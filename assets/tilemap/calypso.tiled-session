@@ -1,0 +1,33 @@
+{
+    "activeFile": "calypso.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "calypso.json": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 227,
+                "y": 300.5
+            }
+        },
+        "sheet.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "sheet.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "/home/squidos/Téléchargements",
+    "openFiles": [
+        "calypso.json",
+        "sheet.json"
+    ],
+    "project": "calypso.tiled-project",
+    "recentFiles": [
+        "sheet.json",
+        "calypso.json"
+    ]
+}

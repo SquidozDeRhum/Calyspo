@@ -7,7 +7,7 @@
 
 class Player : public Entity {
     public:
-        void inputHandling();
+        void positionProcess();
         using Entity::Entity;
     private:
         b2Vec2 velocity;

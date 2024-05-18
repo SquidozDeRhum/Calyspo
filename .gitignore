@@ -4,3 +4,6 @@ main.o
 player.o
 main.exe
 entity.o
+json
+unit1.json
+calypso

@@ -15,8 +15,10 @@ class Entity{
         float m_width;
         float m_height;
         
+        Texture2D m_texture;
+
     public:
-        Entity(b2World & world, float x, float y, float width, float height, bool staticbody = true);
+        Entity(b2World & world, float x, float y, float width, float height, Texture2D &texture, bool staticbody = true);
         void render();
         Vector2 getRaylibPos();
 };
