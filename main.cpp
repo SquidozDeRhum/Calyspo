@@ -16,10 +16,10 @@ const int screenHeight(400);
 
 const int frameRate(60);
 
-std::ifstream tilemap("../assets/tilemap/calypso.json");
+std::ifstream tilemap("./assets/tilemap/calypso.json");
 json tilemapJson = json::parse(tilemap);
 
-std::ifstream texturesInfo("../assets/tilemap/sheet.json");
+std::ifstream texturesInfo("./assets/tilemap/sheet.json");
 json texturesInfoJson = json::parse(texturesInfo);
 
 std::vector<int> vec = tilemapJson["layers"][1]["data"];
@@ -42,13 +42,13 @@ int main() {
 
     for (json::iterator it = texturesInfoJson["tiles"].begin(); it != texturesInfoJson["tiles"].end(); it++) {
         std::string value = it.value()["properties"][0]["value"];
-        value = "../assets/textures/" + value;
+        value = "./assets/textures/" + value;
         char *cvalue = value.data();
         int index = it.value()["id"];
         textures[index + 1] = LoadTexture(cvalue);
     }
 
-    textures[1] = LoadTexture("../assets/textures/character.png");
+    textures[1] = LoadTexture("./assets/textures/character.png");
 
     Player feur(world, 200, 200, 15, 22, textures[1], false);
 
