@@ -40,6 +40,12 @@ int main() {
 
     InitWindow(screenWidth, screenHeight, "Json level creation");
 
+    Camera2D camera = { 0 };
+    camera.target = (Vector2){ 200, 200 };
+    camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
+    camera.rotation = 0.0f;
+    camera.zoom = 3.0f;
+
     for (json::iterator it = texturesInfoJson["tiles"].begin(); it != texturesInfoJson["tiles"].end(); it++) {
         std::string value = it.value()["properties"][0]["value"];
         value = "./assets/textures/" + value;
@@ -62,15 +68,18 @@ int main() {
     
     while(!WindowShouldClose()) {
         feur.positionProcess();
+        camera.target = feur.getRaylibPos();
         BeginDrawing();
-            ClearBackground(Color{127, 127, 127, 0});
-            feur.render();
-            for (int i = 0; i < entities.size(); i++) {
-                entities[i].render();
-            }
+            ClearBackground(Color{0, 100, 150, 0});
+            BeginMode2D(camera);
+                feur.render();
+                for (int i = 0; i < entities.size(); i++) {
+                    entities[i].render();
+                }
+            EndMode2D();
+            DrawFPS(10, 10);
         EndDrawing();
         world.Step(1.0f/frameRate, 6, 2);
-        DrawFPS(10, 10);
     }
 
     CloseWindow();
