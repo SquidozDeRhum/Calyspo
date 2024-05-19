@@ -1,0 +1,48 @@
+{
+    "activeFile": "test_level/calypso.json",
+    "expandedProjectPaths": [
+        "test_level",
+        "."
+    ],
+    "fileStates": {
+        "calypso.json": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 207,
+                "y": 326.5
+            }
+        },
+        "sheet.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "sheet.tsx": {
+            "scaleInDock": 1
+        },
+        "test_level/calypso.json": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 201,
+                "y": 236.5
+            }
+        },
+        "test_level/sheet.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "/home/squidos/Téléchargements",
+    "openFiles": [
+        "test_level/calypso.json",
+        "test_level/sheet.json"
+    ],
+    "project": "calypso.tiled-project",
+    "recentFiles": [
+        "test_level/sheet.json",
+        "test_level/calypso.json",
+        "sheet.json",
+        "calypso.json"
+    ]
+}

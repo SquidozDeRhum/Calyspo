@@ -3,6 +3,7 @@
 
 #include "../include/entity.hpp"
 #include "../include/player.hpp"
+#include "../include/loading.hpp"
 
 #include <iostream>
 
@@ -19,9 +20,9 @@ void Player::positionProcess() {
         velocity.x = 16.0f;
         body->SetLinearVelocity(velocity);
     }
-    if (IsKeyDown(KEY_SPACE) && getRaylibPos().y > 270) {
+    if (IsKeyPressed(KEY_SPACE) && canJump) {
         velocity = body->GetLinearVelocity();
-        velocity.y = -6.0f;
+        velocity.y = -7.0f;
         body->SetLinearVelocity(velocity);
     }
     if (IsKeyUp(KEY_A) && IsKeyUp(KEY_D)) {

@@ -21,6 +21,8 @@ class Entity{
         Entity(b2World & world, float x, float y, float width, float height, Texture2D &texture, bool staticbody = true);
         void render();
         Vector2 getRaylibPos();
+
+        int canJump;
 };
 
 #endif // ENTITY_HPP

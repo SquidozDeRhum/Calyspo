@@ -23,13 +23,15 @@ Entity::Entity(b2World & world, float x, float y, float width, float height, Tex
 
     body->CreateFixture(&fd);
     body->SetFixedRotation(true);
+
+    canJump = 0;
 }
 
 Vector2 Entity::getRaylibPos()
 {
-    return Vector2{(body->GetPosition().x * RATIO), body->GetPosition().y * RATIO};
+    return Vector2{(body->GetPosition().x * RATIO - m_width/2), body->GetPosition().y * RATIO - m_height/2};
 }
 
 void Entity::render() {
     DrawTextureV(m_texture, getRaylibPos(), WHITE);
-};
+}
