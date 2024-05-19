@@ -31,5 +31,5 @@ Vector2 Entity::getRaylibPos()
 }
 
 void Entity::render() {
-    DrawTexture(m_texture, getRaylibPos().x, getRaylibPos().y, WHITE);
+    DrawTextureV(m_texture, getRaylibPos(), WHITE);
 };

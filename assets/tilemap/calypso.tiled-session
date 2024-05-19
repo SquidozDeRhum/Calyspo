@@ -5,11 +5,11 @@
     ],
     "fileStates": {
         "calypso.json": {
-            "scale": 1,
+            "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 227,
-                "y": 300.5
+                "x": 321.99999999999994,
+                "y": 269.33333333333326
             }
         },
         "sheet.json": {
@@ -20,7 +20,7 @@
             "scaleInDock": 1
         }
     },
-    "last.imagePath": "/home/squidos/Téléchargements",
+    "last.imagePath": "C:/Users/henri/Downloads",
     "openFiles": [
         "calypso.json",
         "sheet.json"
