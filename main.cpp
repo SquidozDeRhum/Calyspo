@@ -13,51 +13,46 @@ using json = nlohmann::json;
 #include "include/entity.hpp"
 #include "include/player.hpp"
 #include "include/loading.hpp"
-
-const int screenWidth(400);
-const int screenHeight(400);
-
-const int frameRate(60);
+#include "include/const.hpp"
 
 int main() {
 
-    SetTargetFPS(frameRate);
+    SetTargetFPS(FRAMERATE);
 
     b2Vec2 gravity(0.0f, 19.6f);
     b2World world(gravity);
 
-    InitWindow(screenWidth, screenHeight, "Json level creation");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TEST_LEVEL);
 
     Camera2D camera = { 0 };
-    camera.target = (Vector2){ 200, 200 };
-    camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
+    camera.target = (Vector2){ PLAYER_X, PLAYER_Y };
+    camera.offset = (Vector2){ SCREEN_WIDTH/2.0f, SCREEN_HEIGHT/2.0f };
     camera.rotation = 0.0f;
-    camera.zoom = 3.0f;
+    camera.zoom = CAMERA_ZOOM;
 
-    Texture2D texture = LoadTexture("./assets/textures/character.png");
+    Texture2D texture = LoadTexture(ASSETS_FOLDER TEXTURES_FOLDER CHARACTER_TEXTURE);
 
-    Player feur(world, 200, 200, 15, 22, texture, false);
+    Player player(world, PLAYER_X, PLAYER_Y, 15, 22, texture, false);
 
-    std::vector<Entity> entities = levelLoading("test_level", world);
+    std::vector<Entity> entities = levelLoading(TEST_LEVEL, world);
 
-    MyContactListener contactListener(feur);
+    MyContactListener contactListener(player);
     
     world.SetContactListener(&contactListener);
 
     while(!WindowShouldClose()) {
-        feur.positionProcess();
-        camera.target = feur.getRaylibPos();
+        player.positionProcess();
+        camera.target = player.getRaylibPos();
         BeginDrawing();
-            ClearBackground(Color{0, 100, 150, 0});
+            ClearBackground(Color(BACKGROUND_COLOR));
             BeginMode2D(camera);
-                feur.render();
+                player.render();
                 for (int i = 0; i < entities.size(); i++) {
                     entities[i].render();
                 }
             EndMode2D();
-            DrawFPS(10, 10);
         EndDrawing();
-        world.Step(1.0f/frameRate, 6, 2);
+        world.Step(1.0f/FRAMERATE, 6, 2);
     }
     CloseWindow();
     return 0;

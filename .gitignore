@@ -2,9 +2,11 @@
 main
 main.o
 player.o
+loading.o
 main.exe
 entity.o
 json
 json.cpp
 unit1.json
 calypso
+./build/loading.o
